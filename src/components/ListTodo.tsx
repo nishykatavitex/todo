@@ -31,7 +31,7 @@ const ListTodo = () => {
   const handleDoubleClick = (id: string) => {
     setOpenInputId(id)
   }
-  const handleChangeTodoName = (event, todo: Todo) => {
+  const handleChangeTodoName = (event: React.KeyboardEvent<HTMLInputElement>, todo: Todo) => {
     if (event.key === "Enter") {
       dispatch(changeNameTodo({...todo, name: newNameTodo}))
       setOpenInputId(null)
@@ -47,23 +47,24 @@ const ListTodo = () => {
     dispatch(deleteOneTodo(todo))
   }
   return (
-    <main className="main-todo">
-      <div className="toggle-all-todo">
-        <button className='btn-toggle' onClick={handleSetAllTodoStatus}>
+    <main className="border-t border-solid border-t-[#e6e6e6] relative">
+      <div className="absolute top-[-60px]">
+        <button className='m-[2px] h-14 w-10 flex justify-center items-center focus:shadow-input' onClick={handleSetAllTodoStatus}>
           <img src={arrowdown} alt="" />
         </button>
       </div>
       <ul>
         {getTodoByStatus(listTodo)!.map(t => (
-          <li className='todo-li' key={t.id} onDoubleClick={() => handleDoubleClick(t.id)}>
-            <div className='one-todo'>
-              <div className='status-todo' onDoubleClick={(e) => e.stopPropagation()}>
+          <li className='border border-[#ededed] relative group' key={t.id} onDoubleClick={() => handleDoubleClick(t.id)}>
+            <div className='flex py-3 pr-4 text-2xl items-center'>
+              <div className='basis-[40px] shrink-0 flex justify-center mr-5' onDoubleClick={(e) => e.stopPropagation()}>
                 {!t.isCompleted
                 ? <div className='circle-status' onClick={() => handleChangeStatus(t)}></div>
-                : <div className='circle-status-done' onClick={() => handleChangeStatus(t)}>&#10004;</div>}
+                : <div className='circle-status border-[#72afa3] flex justify-center items-center text-xl text-[#72afa3] cursor-default' onClick={() => handleChangeStatus(t)}>&#10004;</div>}
               </div>
-              <p className={`name-todo ${t.isCompleted && 'isCompleted'}`}>{t.name}</p>
-              <button onDoubleClick={(e) => e.stopPropagation()} onClick={() => handleDeleleTodo(t)} className='delete-btn'></button>
+              <p className={`flex-1 min-w-0 break-words whitespace-normal text-[#484848] ${t.isCompleted ? 'text-[#949494] line-through' : undefined}`}>{t.name}</p>
+              <button onDoubleClick={(e) => e.stopPropagation()} onClick={() => handleDeleleTodo(t)}
+                className='text-transparent after:content-["×"] group-hover:after:block group-hover:after:h-full group-hover:after:leading-[1.1] group-hover:after:text-[#c18585] group-hover:after:text-[26px]'></button>
             </div>
           { openInputId === t.id && <input
           onKeyDown={(e) => handleChangeTodoName(e, t)}
@@ -72,7 +73,7 @@ const ListTodo = () => {
           onChange={handleChangeName}
           type="text"
           autoFocus
-          className={`change-input-todo ${openInputId && 'open'}`}
+          className={`input-todo absolute top-0 h-full ${openInputId ? 'block' : 'hidden' }`}
           placeholder="" />}
           </li>
         ))}

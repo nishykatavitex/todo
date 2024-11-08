@@ -22,14 +22,14 @@ const FooterTodo = () => {
     dispatch(clearCompletedTodos())
   }
   return (
-    <footer className="footer-todo">
-      <span style={{ flexBasis: '84px'}}>{quantity}</span>
-      <div className="filter-status">
-        <button onClick={() => handleChangefilter('All')} className={`${typeFilter === 'All' ? 'toggle-status' : ''}`}>All</button>
-        <button onClick={() => handleChangefilter('Active')} className={`${typeFilter === 'Active' ? 'toggle-status' : ''}`}>Active</button>
-        <button onClick={() => handleChangefilter('Completed')} className={`${typeFilter === 'Completed' ? 'toggle-status' : ''}`}>Completed</button>
+    <footer className="flex z-[3] px-[10px] py-[15px] items-center flex-wrap justify-between *:text-[15px] max-450:h-20 max-450:items-start">
+      <span className="basis-[84px]">{quantity}</span>
+      <div className="max-450-filter-status">
+        <button onClick={() => handleChangefilter('All')} className={`${typeFilter === 'All' ? '!border-[#ce4646]' : 'border-transparent'} py-1 px-2 mx-[2px] !border rounded hover:border-[#db7676]`}>All</button>
+        <button onClick={() => handleChangefilter('Active')} className={`${typeFilter === 'Active' ? '!border-[#ce4646]' : 'border-transparent'} py-1 px-2 mx-[2px] !border rounded hover:border-[#db7676]`}>Active</button>
+        <button onClick={() => handleChangefilter('Completed')} className={`${typeFilter === 'Completed' ? '!border-[#ce4646]' : 'border-transparent'} py-1 px-2 mx-[2px] !border rounded hover:border-[#db7676]`}>Completed</button>
       </div>
-      <button className="clear-completed" onClick={clearCompleted}>Clear completed</button>
+      <button className="cursor-pointer hover:underline" onClick={clearCompleted}>Clear completed</button>
     </footer>
   )
 }
